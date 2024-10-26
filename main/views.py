@@ -21,3 +21,11 @@ class UpdateRecipe(generics.RetrieveUpdateAPIView):
 class DeleteRecipe(generics.DestroyAPIView):
     queryset = Recipes.objects.all()
     serializer_class = RecipeSerializer
+
+class SearchRecipe(generics.ListAPIView):
+    queryset = Recipes.objects.all()
+    serializer_class = RecipeSerializer
+
+    def get_queryset(self):
+        name = self.kwargs.get('name')
+        return Recipes.objects.filter(name__icontains = name)
